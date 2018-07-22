@@ -1,4 +1,8 @@
-function distance(s = "", t = "") {
+export default function(s = "", t = "", transposition = true) {
+  // Implementation of code found on:
+  // https://en.wikipedia.org/wiki/Levenshtein_distance
+  // and
+  // https://en.wikipedia.org/wiki/Damerau%E2%80%93Levenshtein_distance
   // for all i and j, d[i,j] will hold the Levenshtein distance between
   // the first i characters of s and the first j characters of t
   // note that d has (m+1)*(n+1) values
@@ -11,7 +15,7 @@ function distance(s = "", t = "") {
   // source prefixes can be transformed into empty string by
   // dropping all characters
   for (let i = 0; i <= m; i++) {
-    if (!d[i]) d[i] = [];
+    if (!d[i]) d[i] = []; //Lazy initialize matrix
     d[i][0] = i;
   }
 
@@ -29,11 +33,16 @@ function distance(s = "", t = "") {
         d[i][j - 1] + 1, //insertion
         d[i - 1][j - 1] + substitutionCost //substitution
       );
+      if (transposition) {
+        if (i > 1 && j > 1 && s[i - 1] === t[j - 2] && s[i - 2] === t[j - 1]) {
+          d[i][j] = Math.min(d[i][j], d[i - 2][j - 2] + substitutionCost);
+        } //transposition
+      }
     }
   }
 
-  return d;
+  return {
+    result: d[m][n],
+    matrix: d
+  };
 }
-
-const res = distance(process.argv[2], process.argv[3]);
-console.log(res);
