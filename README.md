@@ -1,6 +1,7 @@
 #Fuzzy Search
 
 This project is the implementation of the technical assessment posed byt the Clip team.
+To preview the project follow this link: <https://jcalvarado.github.io/clip/>
 
 ##Requirements
 
