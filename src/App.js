@@ -1,18 +1,20 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import { Provider } from "mobx-react";
+import { AppStore } from "./AppStore";
+import Search from "./components/Search";
+import Transactions from "./components/Transactions";
+import "./App.css";
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <Provider AppStore={new AppStore()}>
+          <div>
+            <Search className="Table" />
+            <Transactions className="Table" />
+          </div>
+        </Provider>
       </div>
     );
   }
